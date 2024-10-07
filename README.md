@@ -34,6 +34,7 @@ Here you will find all the examples provided during the course.
 | Example                            | Topic                     |
 | ---------------------------------- | ------------------------- |
 | [Select](examples/select_basic.md) | Istruzione SELECT di base |
+| [Joins](examples/joins.md)         | Joins                     |
 
 ## List of exercises
 
@@ -41,7 +42,7 @@ Here you will find *some* of the exercises assigned during the course and *proba
 
 | Exercise                     | Solution                                                      |
 | ---------------------------- | ------------------------------------------------------------- |
-| 27 pag. A76          | [ERDPlus diagram](exercises/solutions/A76-27%20Banca.erdplus) |
+| 27 pag. A76                  | [ERDPlus diagram](exercises/solutions/A76-27%20Banca.erdplus) |
 | [None](exercises/nothing.md) | Not provided                                                  |
 
 ## List of lab tests
