@@ -40,10 +40,10 @@ Here you will find all the examples provided during the course.
 
 Here you will find *some* of the exercises assigned during the course and *probably* their solutions.
 
-| Exercise                     | Solution                                                      |
-| ---------------------------- | ------------------------------------------------------------- |
-| 27 pag. A76                  | [ERDPlus diagram](exercises/solutions/A76-27%20Banca.erdplus) |
-| [None](exercises/nothing.md) | Not provided                                                  |
+| Exercise                               | Solution                                                      |
+| -------------------------------------- | ------------------------------------------------------------- |
+| 27 pag. A76                            | [ERDPlus diagram](exercises/solutions/A76-27%20Banca.erdplus) |
+| [2024-10-07](exercises/2024-10-07.sql) | Not provided                                                  |
 
 ## List of lab tests
 
