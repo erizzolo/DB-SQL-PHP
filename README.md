@@ -45,7 +45,7 @@ Here you will find *some* of the exercises assigned during the course and *proba
 | -------------------------------------- | ---------------------------------------------------------------- |
 | 27 pag. A76                            | [ERDPlus diagram](exercises/solutions/A76-27%20Banca.erdplus)    |
 | 28 pag. A76                            | [ERDPlus diagram](exercises/solutions/A76-28%20Sanzioni.erdplus) |
-| [2024-10-07](exercises/2024-10-07.sql) | Not provided                                                     |
+| [2024-10-07](exercises/2024-10-07.sql) | [here](exercises/solutions/2024-10-07.sql)                       |
 
 ## List of lab tests
 
