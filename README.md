@@ -31,10 +31,11 @@ Examples of databases design, SQL & PHP code for students 5AIN & 5BIN.
 Here you will find all the examples provided during the course.
 **Feel absolutely free to make them part of your work.**
 
-| Example                            | Topic                     |
-| ---------------------------------- | ------------------------- |
-| [Select](examples/select_basic.md) | Istruzione SELECT di base |
-| [Joins](examples/joins.md)         | Joins                     |
+| Example                                 | Topic                     |
+| --------------------------------------- | ------------------------- |
+| [Select](examples/select_basic.md)      | Istruzione SELECT di base |
+| [Joins](examples/joins.md)              | Joins                     |
+| [Grouping](examples/select_grouping.md) | Funzioni di aggregazione  |
 
 ## List of exercises
 
