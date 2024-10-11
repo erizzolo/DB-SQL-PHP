@@ -36,6 +36,7 @@ Here you will find all the examples provided during the course.
 | [Select](examples/select_basic.md)      | Istruzione SELECT di base |
 | [Joins](examples/joins.md)              | Joins                     |
 | [Grouping](examples/select_grouping.md) | Funzioni di aggregazione  |
+| [Constraints](examples/constraints.md)  | Vincoli                   |
 
 ## List of exercises
 
