@@ -13,7 +13,7 @@ in schemi logici relazionali, definendo:
 * chiavi esterne
 * ulteriori altri vincoli di dominio, tupla, ...
 
-Prendendo esempio dallo script [DB_schema](examples/DB_schema.sql) scrivere uno script di creazione del db ed eseguirlo per verificarne la correttezza.
+Prendendo esempio dallo script [DB_schema](../examples/DB_schema.sql) scrivere uno script di creazione del db ed eseguirlo per verificarne la correttezza.
 
 
 
