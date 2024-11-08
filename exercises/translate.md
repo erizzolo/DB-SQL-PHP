@@ -1,9 +1,9 @@
 ## Traduzione schemi E/R in schemi logici relazionali
 Tradurre gli schemi E/R degli esercizi svolti:
 
-* [Banca](exercises/solutions/A76-27%20Banca.erdplus)
-* [Sanzioni](exercises/solutions/A76-28%20Sanzioni.erdplus)
-* [Compagnia aerea](exercises/solutions/A77-30%20Compagnia%20aerea.erdplus)
+* [Banca](solutions/A76-27%20Banca.erdplus)
+* [Sanzioni](solutions/A76-28%20Sanzioni.erdplus)
+* [Compagnia aerea](solutions/A77-30%20Compagnia%20aerea.erdplus)
    
 in schemi logici relazionali, definendo:
 
