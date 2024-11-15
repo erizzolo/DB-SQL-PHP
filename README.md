@@ -31,13 +31,16 @@ Examples of databases design, SQL & PHP code for students 5AIN & 5BIN.
 Here you will find all the examples provided during the course.
 **Feel absolutely free to make them part of your work.**
 
-| Example                                 | Topic                       |
-| --------------------------------------- | --------------------------- |
-| [Select](examples/select_basic.md)      | Istruzione SELECT di base   |
-| [Joins](examples/joins.md)              | Joins                       |
-| [Grouping](examples/select_grouping.md) | Funzioni di aggregazione    |
-| [Constraints](examples/constraints.md)  | Vincoli                     |
-| [DB_schema](examples/DB_schema.sql)     | Esempio script creazione DB |
+| Example                                       | Topic                                                    |
+| --------------------------------------------- | -------------------------------------------------------- |
+| [Select](examples/select_basic.md)            | Istruzione SELECT di base                                |
+| [Joins](examples/joins.md)                    | Joins                                                    |
+| [Grouping](examples/select_grouping.md)       | Funzioni di aggregazione                                 |
+| [Constraints](examples/constraints.md)        | Vincoli                                                  |
+| [DB_schema](examples/DB_schema.sql)           | Esempio script creazione DB                              |
+| [Ristrutturazione](examples/restructuring.md) | Osservazioni sulla ristrutturazione di schemi E/R        |
+| [Traduzione](examples/translation.md)         | Osservazioni sulla traduzione di schemi E/R (ed esempio) |
+
 
 ## List of exercises
 
