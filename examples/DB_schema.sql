@@ -23,7 +23,7 @@ CREATE TABLE table_name (
     o3 SET('Tasty', 'Spicy', 'Healthy', 'Cheap', 'Vegan') NULL DEFAULT NULL COMMENT "Optional set field",
     -- derived (computed) fields
     d1 TINYINT AS (WEEKDAY(a1)) VIRTUAL COMMENT "Simple function, computed when needed",
-    d2 DOUBLE AS (EXP(o2) + LOG(o2)) PERSISTENT COMMENT "Complex function, computed and stored when changed",
+    d2 DOUBLE AS (EXP(o2) + LOG(o2)) STORED COMMENT "Complex function, computed and stored when changed",
     -- invisible (not shown with *) fields
     i1 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP() INVISIBLE COMMENT "Row update timestamp",
     -- external identifier(s) relationship 1
@@ -62,10 +62,23 @@ SELECT "SHOW CREATE TABLE table_name;" AS "Visualizzazione dell'istruzione di cr
 SHOW CREATE TABLE table_name;
 
 -- other tables ...
+SELECT "CREATE TABLE other_table (...);" AS "Creazione nuova tabella other_table";
+CREATE TABLE other_table (
+    -- primary key field(s)
+    k1 INT COMMENT "K1 ...",
+    k2 CHAR(3) COMMENT "K2 ...",
+    -- CONSTRAINTS:
+    -- PRIMARY KEY: implies NOT NULL
+    PRIMARY KEY (k1, k2)
+) COMMENT "Just for nomeVincolo2";
+
 -- if circular references constraints...
 ALTER TABLE table_name
     ADD CONSTRAINT nomeVincolo2 FOREIGN KEY(f2_k1,f2_k2) REFERENCES other_table(k1,k2)
-    ON UPDATE SET NULL ON DELETE CASCADE;
+    -- ERROR 1901 (HY000) (set null? not allowed with NoMixUp check??)
+    -- ON UPDATE SET NULL ON DELETE CASCADE; 
+    -- ON UPDATE SET NULL ON DELETE SET NULL; 
+    ON UPDATE NO ACTION ON DELETE CASCADE;
 
 
 -- Template of view creation instruction
