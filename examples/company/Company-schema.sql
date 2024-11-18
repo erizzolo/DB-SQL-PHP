@@ -35,22 +35,6 @@ CREATE TABLE branch (
     PRIMARY KEY (city)
 ) COMMENT "Table for entity Branch";
 
-SELECT "CREATE TABLE employee (...);" AS "Creazione nuova tabella employee";
-CREATE TABLE employee (
-    -- primary key field(s)
-    code INT AUTO_INCREMENT COMMENT "matricola",
-    -- mandatory fields
-    surname VARCHAR(30) NOT NULL COMMENT "surname",
-    salary DECIMAL(8,2) NOT NULL COMMENT "salary",
-    birthdate DATE NOT NULL COMMENT "nascita",
-    -- derived (computed) fields
-    -- age INT AS (DATEDIFF(NOW(), birthdate) / 365) VIRTUAL COMMENT "age wrongly computed...",
-    age INT AS (YEAR(NOW()) - YEAR(birthdate) - (DAYOFYEAR(NOW()) < DAYOFYEAR(birthdate)) ) VIRTUAL COMMENT "age computed...",
-    -- CONSTRAINTS:
-    -- PRIMARY KEY: implies NOT NULL
-    PRIMARY KEY (code)
-) COMMENT "Table for entity Employee";
-
 SELECT "CREATE TABLE department (...);" AS "Creazione nuova tabella department";
 CREATE TABLE department (
     -- primary key field(s)
@@ -79,6 +63,22 @@ CREATE TABLE phone (
         ON UPDATE CASCADE ON DELETE NO ACTION
 ) COMMENT "Table for multiple attribute Phone of entity Department";
 
+SELECT "CREATE TABLE employee (...);" AS "Creazione nuova tabella employee";
+CREATE TABLE employee (
+    -- primary key field(s)
+    code INT AUTO_INCREMENT COMMENT "matricola",
+    -- mandatory fields
+    surname VARCHAR(30) NOT NULL COMMENT "surname",
+    salary DECIMAL(8,2) NOT NULL COMMENT "salary",
+    birthdate DATE NOT NULL COMMENT "nascita",
+    -- derived (computed) fields
+    -- age INT AS (DATEDIFF(NOW(), birthdate) / 365) VIRTUAL COMMENT "age wrongly computed...",
+    age INT AS (YEAR(NOW()) - YEAR(birthdate) - (DAYOFYEAR(NOW()) < DAYOFYEAR(birthdate)) ) VIRTUAL COMMENT "age computed...",
+    -- CONSTRAINTS:
+    -- PRIMARY KEY: implies NOT NULL
+    PRIMARY KEY (code)
+) COMMENT "Table for entity Employee";
+
 SELECT "CREATE TABLE participation (...);" AS "Creazione nuova tabella participation";
 CREATE TABLE participation (
     -- primary key field(s)
@@ -98,17 +98,23 @@ CREATE TABLE participation (
 
 SELECT "ALTER TABLE employee (...);" AS "Modifica tabella employee";
 ALTER TABLE employee
+    -- relationship Membership
     ADD COLUMN department VARCHAR(20) NULL COMMENT "1. Member of Department name",
-    ADD COLUMN branch VARCHAR(30) NULL COMMENT "1. Member Department branch",
-    ADD COLUMN start DATE NULL COMMENT "2. Membership start date",
+    ADD COLUMN branch VARCHAR(30) NULL COMMENT "1. Member of Department branch",
+    ADD COLUMN startDate DATE NULL COMMENT "2. Membership start date",
     -- CONSTRAINTS:
+    -- external identifier(s) relationship Membership
     ADD CONSTRAINT membershipDepartment FOREIGN KEY(department, branch) REFERENCES department(name, branch)
-        ON UPDATE CASCADE ON DELETE NO ACTION,
+        -- sorry, from a 10.x version it's not allowed to specify on update cascade/set null
+        -- and then use the columns in a check clause ;-) ;-(#)
+        -- ON UPDATE CASCADE ON DELETE NO ACTION
+        ON UPDATE NO ACTION ON DELETE CASCADE,
     -- OPTIONAL FOREIGN KEY MEANINGFUL: (both NULL or none NULL)
     ADD CONSTRAINT DepartmentBranchNULLS CHECK(ISNULL(department) = ISNULL(branch)),
     -- Optional Relationship mandatory attribute MEANINGFUL: (NULL if no participation)
-    ADD CONSTRAINT NoStarDateIfNoMembership CHECK(ISNULL(department) = ISNULL(start));
+    ADD CONSTRAINT NoStarDateIfNoMembership CHECK(ISNULL(department) = ISNULL(startDate));
 
+-- circular constraint requires an alter table
 SELECT "ALTER TABLE department (...);" AS "Modifica tabella department";
 ALTER TABLE department
     ADD COLUMN manager INT NOT NULL COMMENT "1. Manager employee code",

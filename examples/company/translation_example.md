@@ -1,6 +1,7 @@
 # Translation of E/R diagram to relational schema
 Come esempio abbastanza esaustivo di traduzione di una schema E/R si procede alla traduzione dello schema E/R:
 ![E/R schema](company.png "E/R schema of a Company")
+
 Provvediamo a ristrutturare lo schema come visto in [Restructuring an E/R diagram](../restructuring.md).
 
 Considerando che:
@@ -12,6 +13,7 @@ Considerando che:
 * non vi sono ulteriori considerazioni
 
 Si ottiene lo schema E/R:
+
 ![E/R schema](company-r.png "Restructured /R schema of a Company")
 
 Si procede alla traduzione secondo quanto indicato in [# Translation of E/R diagram to relational schema](../translation.md).
@@ -66,6 +68,7 @@ CREATE TABLE employee (
     PRIMARY KEY (code)
 ) COMMENT "Table for entity Employee";
 ```
+> L'uso di funzioni *non deterministiche* (come NOW(), RAND() etc. che potenzialmente restituiscono valori diversi in istanti diversi) per le colonne generate non è consentito in MySQL, mentre lo è in MariaDB se la colonna è VIRTUAL (almeno così pare). Se così fosse, bisognerebbe usare un trigger (anzi due)...
 
 Per l'entità *Department*:
 ```SQL
@@ -81,6 +84,14 @@ CREATE TABLE department (
         ON UPDATE CASCADE ON DELETE NO ACTION
 ) COMMENT "Table for entity Department";
 ```
+
+> L'ordine degli attributi nella primary key potrebbe essere diverso (cioè *branch*, *name*).
+> 
+> Poiché però *branch* è **foreign key** viene automaticamente creato un indice per l'accesso (ricerca, ordinamento) con *branch*.
+> 
+> Usando *name* come primo attributo della **primary key** si ottiene anche un indice per l'accesso (ricerca, ordinamento) con *name* come criterio principale (e *branch* come secondario).
+> 
+> Ciò, naturalmente, **con il costo spese di un indice in più da aggiornare in caso di inserimenti/modifiche** (operazioni che si suppongono poco frequenti!).
 
 Per l'entità *Phone*:
 ```SQL
@@ -107,7 +118,7 @@ CREATE TABLE participation (
     employee INT COMMENT "1. 1 Participating employee code",
     project VARCHAR(30) COMMENT "1. 2 Project name",
     -- mandatory fields
-    start DATE NOT NULL COMMENT "3. Starting date",
+    startDate DATE NOT NULL COMMENT "3. Starting date",
     -- CONSTRAINTS:
     -- PRIMARY KEY: implies NOT NULL
     PRIMARY KEY (employee, project), -- 1. (employee, project) + 2. (empty)
@@ -119,7 +130,7 @@ CREATE TABLE participation (
 ) COMMENT "Table for association Participation";
 ```
 
-In questo caso l'attributo *start* non è identificante e quindi non entra a far parte della chiave primaria.
+In questo caso l'attributo *startDate* non è identificante e quindi non entra a far parte della chiave primaria.
 
 Se invece l'attributo avesse, ad esempio, il significato di "data in cui l'employee ha svolto un'attività per il progetto" allora sarebbe identificante (il medesimo employee può svolgere diverse attività in giorni *diversi* per il medesimo progetto) ed entrerebbe a far parte della chiave primaria, come in questa variante:
 ```SQL
@@ -128,10 +139,10 @@ CREATE TABLE participation (
     employee INT COMMENT "1. 1 Participating employee code",
     project VARCHAR(30) COMMENT "1. 2 Project name",
     -- mandatory fields
-    start DATE NOT NULL COMMENT "2. Working date",
+    startDate DATE NOT NULL COMMENT "2. Working date",
     -- CONSTRAINTS:
     -- PRIMARY KEY: implies NOT NULL
-    PRIMARY KEY (employee, project, start), -- 1. (employee, project) + 2. (start)
+    PRIMARY KEY (employee, project, startDate), -- 1. (employee, project) + 2. (startDate)
     -- FOREIGN KEYS (optional)
     CONSTRAINT RealEmployee FOREIGN KEY(employee) REFERENCES employee(code)
         ON UPDATE CASCADE ON DELETE NO ACTION,
@@ -145,15 +156,18 @@ Nel nostro caso, per l'associazione *Membership*:
 ```SQL
 ALTER TABLE employee
     ADD COLUMN department VARCHAR(20) NULL COMMENT "1. Member of Department name",
-    ADD COLUMN branch VARCHAR(30) NULL COMMENT "1. Member Department branch",
-    ADD COLUMN start DATE NULL COMMENT "2. Membership start date",
+    ADD COLUMN branch VARCHAR(30) NULL COMMENT "1. Member of Department branch",
+    ADD COLUMN startDate DATE NULL COMMENT "2. Membership start date",
     -- CONSTRAINTS:
     ADD CONSTRAINT membershipDepartment FOREIGN KEY(department, branch) REFERENCES department(name, branch)
-        ON UPDATE CASCADE ON DELETE NO ACTION,
+        -- sorry, from a 10.x version it's not allowed to specify on update cascade/set null
+        -- and then use the columns in a check clause ;-) ;-(#)
+        -- ON UPDATE CASCADE ON DELETE NO ACTION
+        ON UPDATE NO ACTION ON DELETE CASCADE,
     -- OPTIONAL FOREIGN KEY MEANINGFUL: (both NULL or none NULL)
     ADD CONSTRAINT DepartmentBranchNULLS CHECK(ISNULL(department) = ISNULL(branch)),
     -- Optional Relationship mandatory attribute MEANINGFUL: (NULL if no participation)
-    ADD CONSTRAINT NoStarDateIfNoMembership CHECK(ISNULL(department) = ISNULL(start));
+    ADD CONSTRAINT NoStarDateIfNoMembership CHECK(ISNULL(department) = ISNULL(startDate));
 ```
 In alternativa, qualora:
 * l'associazione fosse poco utilizzata (poche operazioni non frequenti)
@@ -163,15 +177,16 @@ si potrebbe avere la variante con tabella aggiuntiva:
 ```SQL
 CREATE TABLE membership (
     -- primary key field(s)
-    employee INT COMMENT "1. Member employee code",
+    employee INT COMMENT "1. A Member employee code",
     -- foreign key field(s)
-    department VARCHAR(20) COMMENT "2. Department name",
-    branch VARCHAR(30) COMMENT "2. city branch",
+    department VARCHAR(20) COMMENT "1. B Department name",
+    branch VARCHAR(30) COMMENT "1. B Department branch",
     -- mandatory fields
-    start DATE NOT NULL COMMENT "Starting date",
+    startDate DATE NOT NULL COMMENT "3. Starting date",
     -- CONSTRAINTS:
     -- PRIMARY KEY: implies NOT NULL
     PRIMARY KEY (employee),
+    -- si noti solo 1. A poiché cardinalità max 1: UNIQUE !!!
     -- FOREIGN KEYS (optional)
     CONSTRAINT RealMember FOREIGN KEY(employee) REFERENCES employee(code)
         ON UPDATE CASCADE ON DELETE NO ACTION,
