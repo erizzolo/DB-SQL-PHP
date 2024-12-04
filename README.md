@@ -52,7 +52,7 @@ Here you will find *some* of the exercises assigned during the course and *proba
 | 28 pag. A76                            | [ERDPlus diagram](exercises/solutions/A76-28%20Sanzioni.erdplus)          |
 | [2024-10-07](exercises/2024-10-07.sql) | [here](exercises/solutions/2024-10-07.sql)                                |
 | 30 pag. A77                            | [ERDPlus diagram](exercises/solutions/A77-30%20Compagnia%20aerea.erdplus) |
-| [Traduzioni](exercises/translate.md)   | Not yet                                                                   |
+| [Traduzioni](exercises/translate.md)   | [Traduzioni (parziale)](exercises/solutions/translate.md) yet             |
 
 ## List of lab tests
 
