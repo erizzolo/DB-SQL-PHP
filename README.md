@@ -40,6 +40,7 @@ Here you will find all the examples provided during the course.
 | [DB_schema](examples/DB_schema.sql)           | Esempio script creazione DB                              |
 | [Ristrutturazione](examples/restructuring.md) | Osservazioni sulla ristrutturazione di schemi E/R        |
 | [Traduzione](examples/translation.md)         | Osservazioni sulla traduzione di schemi E/R (ed esempio) |
+| [Views](examples/views.md)                    | Views, scopi ed esempi                                   |
 
 
 ## List of exercises
