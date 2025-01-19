@@ -41,7 +41,7 @@ Here you will find all the examples provided during the course.
 | [Ristrutturazione](examples/restructuring.md) | Osservazioni sulla ristrutturazione di schemi E/R        |
 | [Traduzione](examples/translation.md)         | Osservazioni sulla traduzione di schemi E/R (ed esempio) |
 | [Views](examples/views.md)                    | Views, scopi ed esempi                                   |
-
+| [Subqueries](examples/subqueries.md)          | Subqueries                                               |
 
 ## List of exercises
 
