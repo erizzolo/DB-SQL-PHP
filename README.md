@@ -42,6 +42,7 @@ Here you will find all the examples provided during the course.
 | [Traduzione](examples/translation.md)         | Osservazioni sulla traduzione di schemi E/R (ed esempio) |
 | [Views](examples/views.md)                    | Views, scopi ed esempi                                   |
 | [Subqueries](examples/subqueries.md)          | Subqueries                                               |
+| [Triggers](examples/triggers.md)              | Triggers, scopi ed esempi                                |
 
 ## List of exercises
 
